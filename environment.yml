@@ -1,0 +1,15 @@
+name: genre-env
+dependencies:
+  - python=3.10
+  - numpy
+  - pandas
+  - scikit-learn
+  - matplotlib
+  - seaborn
+  - jupyter
+  - pip
+  - pip:
+      - tensorflow
+      - nltk
+      - spacy
+      
