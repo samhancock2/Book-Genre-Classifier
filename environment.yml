@@ -9,7 +9,7 @@ dependencies:
   - jupyter
   - pip
   - pip:
-      - tensorflow
+      - tensorflow==2.15.0
       - nltk
       - spacy
-      - tensorflow_hub
+      - tensorflow_hub==0.16.1
