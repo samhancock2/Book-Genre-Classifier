@@ -1,8 +1,4 @@
 name: genre-env
-channels:
-  - defaults
-  - conda-forge
-  - pytorch
 dependencies:
   - python=3.10
   - numpy
@@ -19,4 +15,4 @@ dependencies:
   - pip:
       - nltk
       - spacy
-      - sentence-transformers
+
