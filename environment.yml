@@ -1,4 +1,8 @@
 name: genre-env
+channels:
+  - defaults
+  - conda-forge
+  - pytorch
 dependencies:
   - python=3.10
   - numpy
@@ -7,10 +11,12 @@ dependencies:
   - matplotlib
   - seaborn
   - jupyter
+  - pytorch
+  - torchvision
+  - torchaudio
+  - torchtext
   - pip
   - pip:
       - nltk
       - spacy
-      - --pre torch
-      - --pre torchvision
-      - --index-url https://download.pytorch.org/whl/nightly/cu130
+      - sentence-transformers
