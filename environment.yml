@@ -9,7 +9,8 @@ dependencies:
   - jupyter
   - pip
   - pip:
-      - tensorflow==2.15.0
       - nltk
       - spacy
-      - tensorflow_hub==0.16.1
+      - --pre torch
+      - --pre torchvision
+      - --index-url https://download.pytorch.org/whl/nightly/cu130
