@@ -1,0 +1,1 @@
+inital glove 6B 50 dim model: 71% accuracy
