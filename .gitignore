@@ -1,0 +1,5 @@
+notebooks/.vector_cache/
+.vector_cache
+# Ignore Python cache files
+__pycache__/
+*.py[cod]
