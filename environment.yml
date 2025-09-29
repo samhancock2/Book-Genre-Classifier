@@ -1,15 +1,14 @@
 name: genre-env
 dependencies:
-  - python=3.10
-  - numpy
+  - python=3.13.7
   - pandas
+  - numpy
   - scikit-learn
   - matplotlib
   - seaborn
   - jupyter
   - pip
   - pip:
-      - tensorflow
       - nltk
       - spacy
-      - tensorflow_hub
+

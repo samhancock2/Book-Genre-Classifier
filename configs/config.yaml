@@ -1,0 +1,22 @@
+dataset:
+  path: "C:\\Users\\the3s\\VSC\\Book-Genre-Classifier\\data\\processed\\full_2k.csv"
+  test_size: 0.1
+  val_size: 0.1111
+  random_state: 13
+
+embedding:
+  type: "glove"
+  dim: 50
+
+experiment_name: "glove_baseline"
+
+training:
+  epochs: 50
+  batch_size: 32
+  lr: 0.001
+  early_stopping_patience: 3
+
+
+model:
+  type: "simple_nn"
+  hidden_dim: 128
