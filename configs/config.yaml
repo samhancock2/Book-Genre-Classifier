@@ -1,5 +1,5 @@
 dataset:
-  path: "C:\\Users\\the3s\\VSC\\Book-Genre-Classifier\\data\\processed\\full_2k.csv"
+  path: "data/processed/full_2k.csv"
   test_size: 0.1
   val_size: 0.1111
   random_state: 13
