@@ -8,10 +8,14 @@ embedding:
   type: "glove"
   dim: 50
 
+experiment_name: "glove_baseline"
+
 training:
-  batch_size: 32
   epochs: 50
+  batch_size: 32
   lr: 0.001
+  early_stopping_patience: 3
+
 
 model:
   type: "simple_nn"
