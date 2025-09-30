@@ -77,8 +77,10 @@ for i, params in enumerate(param_combinations, start=1):
         f.write(f"Accuracy: {acc:.4f}\n\n")
         f.write("Classification Report:\n")
         f.write(report)
-        f.write("\nConfusion Matrix:\n")
-        f.write(str(cm))
+        f.write("\nHyperparameters:\n")
+        for key, value in params.items():
+            f.write(f"{key}: {value}\n")
+
 
     # ---- Append to CSV summary ----
     with open(summary_file, "a", newline="") as f:
