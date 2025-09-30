@@ -5,40 +5,56 @@ from torch.utils.data import DataLoader
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 import seaborn as sns
 import matplotlib.pyplot as plt
-
 from data import BookDataset
 
 
 def evaluate(model, config, label_encoder, save_dir):
-    test_ds = BookDataset(config['dataset']['path'], "test",
-                          config['dataset']['test_size'], config['dataset']['val_size'],
-                          config['dataset']['random_state'], glove_dim=config['embedding']['dim'])
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+    # ---- Optional: Sentence Transformer model ----
+    transformer_model = None
+    if config['dataset']['embedding_type'] == 'sentence_transformers':
+        from sentence_transformers import SentenceTransformer
+        transformer_model = SentenceTransformer(config['dataset']['transformer_model']).to(device)
+
+    # ---- Test dataset ----
+    test_ds = BookDataset(
+        csv_path=config['dataset']['path'],
+        split="test",
+        test_size=config['dataset']['test_size'],
+        val_size=config['dataset']['val_size'],
+        random_state=config['dataset']['random_state'],
+        embedding_type=config['dataset']['embedding_type'],
+        glove_dim=config['embedding']['dim'],
+        transformer_model=transformer_model,
+        device=device
+    )
     test_loader = DataLoader(test_ds, batch_size=config['training']['batch_size'])
 
     all_preds, all_labels = [], []
     model.eval()
     with torch.no_grad():
         for X, y in test_loader:
+            X, y = X.to(device), y.to(device)
             outputs = model(X.float())
             _, preds = torch.max(outputs, 1)
             all_preds.extend(preds.cpu().numpy())
             all_labels.extend(y.cpu().numpy())
 
-    # ---- Accuracy ----
+    # ---- Metrics ----
     acc = accuracy_score(all_labels, all_preds)
-    with open(os.path.join(save_dir, "accuracy.txt"), "w") as f:
-        f.write(f"Test Accuracy: {acc:.4f}\n")
-    print(f"✅ Saved accuracy: {acc:.4f}")
-
-    # ---- Classification report ----
     report = classification_report(all_labels, all_preds, target_names=label_encoder.classes_)
-    with open(os.path.join(save_dir, "classification_report.txt"), "w") as f:
-        f.write(report)
-    print("✅ Saved classification report")
-
-    # ---- Confusion matrix ----
     cm = confusion_matrix(all_labels, all_preds)
-    plt.figure(figsize=(8, 6))
+
+    # ---- Save classification report ----
+    os.makedirs(save_dir, exist_ok=True)
+    with open(os.path.join(save_dir, "classification_report.txt"), "w") as f:
+        f.write(f"Accuracy: {acc:.4f}\n\n")
+        f.write(report)
+    print(f"✅ Saved classification report to {save_dir}/classification_report.txt")
+
+    # ---- Save confusion matrix ----
+    plt.figure(figsize=(8,6))
     sns.heatmap(cm, annot=True, fmt="d", cmap="Blues",
                 xticklabels=label_encoder.classes_,
                 yticklabels=label_encoder.classes_)
@@ -46,7 +62,8 @@ def evaluate(model, config, label_encoder, save_dir):
     plt.ylabel("True")
     plt.title("Confusion Matrix")
     plt.tight_layout()
-    cm_path = os.path.join(save_dir, "confusion_matrix.png")
-    plt.savefig(cm_path)
+    plt.savefig(os.path.join(save_dir, "confusion_matrix.png"))
     plt.close()
-    print(f"✅ Saved confusion matrix to {cm_path}")
+    print(f"✅ Saved confusion matrix to {save_dir}/confusion_matrix.png")
+
+    return acc, report, cm

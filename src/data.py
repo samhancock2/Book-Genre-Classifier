@@ -9,9 +9,19 @@ from utils import clean_text
 
 
 class BookDataset(Dataset):
-    def __init__(self, csv_path, split, test_size, val_size, random_state, glove_dim=50):
+    def __init__(self, 
+                 csv_path, 
+                 split, 
+                 test_size, 
+                 val_size, 
+                 random_state, 
+                 embedding_type='glove', 
+                 glove_dim=50, 
+                 transformer_model=None, 
+                 device='cpu'):
+
         # ---- Resolve path relative to project root ----
-        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # one level above src/
+        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         csv_path = os.path.join(project_root, csv_path) if not os.path.isabs(csv_path) else csv_path
 
         # ---- Load CSV ----
@@ -34,16 +44,31 @@ class BookDataset(Dataset):
             stratify=y_temp, random_state=random_state
         )
 
+        # ---- Select split ----
         if split == "train":
             self.texts, self.labels = X_train, y_train
         elif split == "val":
             self.texts, self.labels = X_val, y_val
-        else:
+        else:  # test
             self.texts, self.labels = X_test, y_test
 
-        # ---- GloVe embeddings ----
-        self.glove = GloVe(name='6B', dim=glove_dim)
-        self.vectors = torch.stack([self.sentence_to_vec(t) for t in self.texts])
+        # ---- Prepare embeddings ----
+        if embedding_type == 'glove':
+            self.glove = GloVe(name='6B', dim=glove_dim)
+            self.vectors = torch.stack([self.sentence_to_vec(t) for t in self.texts])
+        elif embedding_type == 'sentence_transformers':
+            if transformer_model is None:
+                raise ValueError("Provide a transformer_model for sentence-transformers embeddings")
+            self.vectors = transformer_model.encode(
+                self.texts.tolist(),
+                batch_size=64,
+                convert_to_tensor=True,
+                device=device
+            )
+        else:
+            raise ValueError(f"Unknown embedding_type: {embedding_type}")
+
+        # ---- Convert labels to tensor ----
         self.labels = torch.tensor(self.labels.values, dtype=torch.long)
 
     def sentence_to_vec(self, sentence):

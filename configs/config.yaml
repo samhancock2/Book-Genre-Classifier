@@ -1,21 +1,20 @@
 dataset:
   path: "data/processed/full_2k.csv"
   test_size: 0.1
-  val_size: 0.1111
+  val_size: 0.111
   random_state: 13
+  embedding_type: "sentence_transformers"  # match code
+  transformer_model: "all-MiniLM-L6-v2"
+  device: "cuda"
 
 embedding:
-  type: "glove"
-  dim: 50
-
-experiment_name: "glove_baseline"
+  dim: 100
 
 training:
   epochs: 50
   batch_size: 32
   lr: 0.001
   early_stopping_patience: 3
-
 
 model:
   type: "simple_nn"

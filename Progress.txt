@@ -1,2 +1,11 @@
-inital glove 6B 50 dim model: 71% accuracy
-384 dim sentence transformer model 76.5% accuracy
+glove 6B 50 dim model: 71% acc
+glove 6B 100 dim model: 72% acc
+384 dim sentence transformer model 76% acc
+
+
+
+To Do:
+Grid serach hyperparams
+Increase model size
+increase batch size 
+decrease lr
