@@ -1,14 +1,15 @@
 glove 6B 50 dim model: 71% acc
 glove 6B 100 dim model: 72% acc
 glove 6B 200 dim model: 75% acc
-glove 6B 300 dim model: 76.1% acc 
+glove 6B 300 dim model: 76% acc 
 epochs = 50 , bs = 32, lr = 0.001, hd = 128, patience = 3
 
 *do trainable dim vecs on best model* (add one line to data.py)
 
-hyperparam tuning (grid search) on glove models (set patience):
-glove 6B 300 dim model: 76% acc --> 77% acc 
-epochs = 50, bs = 32, lr = 0.0005, hd = 256
+hyperparam tuning (grid search) on glove models: (ran twice: patience=3 - 76.9% best acc, patience=7 - 77.3% best acc)
+glove 6B 300 dim model: 76.1% acc --> 77.32% acc 
+epochs = 50, bs = 64, lr = 0.0005, hd = 128, patience = 7
+
 
 
 sentence-transformers 384 dim model 76% acc
@@ -16,5 +17,3 @@ sentence-transformers 384 dim model 76% acc
 To Do:
 Grid serach hyperparams
 Increase model size
-increase batch size 
-decrease lr

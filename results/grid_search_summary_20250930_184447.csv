@@ -1,0 +1,13 @@
+run_id,embedding_type,embedding_dim,lr,batch_size,hidden_dim,epochs,accuracy,save_dir
+1,glove,300,0.001,32,128,50,0.7607,C:\Users\the3s\VSC\Book-Genre-Classifier\results\glove_300_e50bs32lr0.001hd128_20250930_184447
+2,glove,300,0.001,32,256,50,0.7662,C:\Users\the3s\VSC\Book-Genre-Classifier\results\glove_300_e50bs32lr0.001hd256_20250930_184554
+3,glove,300,0.001,64,128,50,0.7630,C:\Users\the3s\VSC\Book-Genre-Classifier\results\glove_300_e50bs64lr0.001hd128_20250930_184659
+4,glove,300,0.001,64,256,50,0.7630,C:\Users\the3s\VSC\Book-Genre-Classifier\results\glove_300_e50bs64lr0.001hd256_20250930_184747
+5,glove,300,0.0005,32,128,50,0.7613,C:\Users\the3s\VSC\Book-Genre-Classifier\results\glove_300_e50bs32lr0.0005hd128_20250930_184839
+6,glove,300,0.0005,32,256,50,0.7679,C:\Users\the3s\VSC\Book-Genre-Classifier\results\glove_300_e50bs32lr0.0005hd256_20250930_184958
+7,glove,300,0.0005,64,128,50,0.7732,C:\Users\the3s\VSC\Book-Genre-Classifier\results\glove_300_e50bs64lr0.0005hd128_20250930_185121
+8,glove,300,0.0005,64,256,50,0.7676,C:\Users\the3s\VSC\Book-Genre-Classifier\results\glove_300_e50bs64lr0.0005hd256_20250930_185234
+9,glove,300,0.002,32,128,50,0.7607,C:\Users\the3s\VSC\Book-Genre-Classifier\results\glove_300_e50bs32lr0.002hd128_20250930_185333
+10,glove,300,0.002,32,256,50,0.7549,C:\Users\the3s\VSC\Book-Genre-Classifier\results\glove_300_e50bs32lr0.002hd256_20250930_185429
+11,glove,300,0.002,64,128,50,0.7650,C:\Users\the3s\VSC\Book-Genre-Classifier\results\glove_300_e50bs64lr0.002hd128_20250930_185529
+12,glove,300,0.002,64,256,50,0.7592,C:\Users\the3s\VSC\Book-Genre-Classifier\results\glove_300_e50bs64lr0.002hd256_20250930_185618
