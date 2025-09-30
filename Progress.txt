@@ -1,6 +1,8 @@
 glove 6B 50 dim model: 71% acc
 glove 6B 100 dim model: 72% acc
-384 dim sentence transformer model 76% acc
+glove 6B 200 dim model: 75% acc
+glove 6B 300 dim model: 76% acc
+sentence-transformers 384 dim model 76% acc
 
 
 

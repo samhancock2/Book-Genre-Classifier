@@ -1,0 +1,19 @@
+Accuracy: 0.7473
+
+              precision    recall  f1-score   support
+
+   Biography       0.60      0.65      0.62       212
+    Business       0.96      0.93      0.94       254
+     Cooking       0.96      0.99      0.97       289
+     General       0.35      0.30      0.33       227
+     History       0.77      0.63      0.69       204
+    Juvenile       0.86      0.90      0.88       911
+    Literary       0.51      0.35      0.41       213
+     Mystery       0.49      0.72      0.59       227
+    Religion       0.80      0.89      0.85       346
+     Romance       0.71      0.76      0.73       330
+   Thrillers       0.73      0.43      0.54       230
+
+    accuracy                           0.75      3443
+   macro avg       0.70      0.69      0.69      3443
+weighted avg       0.75      0.75      0.74      3443
