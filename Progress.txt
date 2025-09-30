@@ -1,1 +1,2 @@
 inital glove 6B 50 dim model: 71% accuracy
+384 dim sentence transformer model 76.5% accuracy
