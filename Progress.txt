@@ -6,17 +6,27 @@ epochs = 50 , bs = 32, lr = 0.001, hd = 128, patience = 3
 
 
 
-hyperparam tuning (grid search) on glove models: (ran twice: patience=3 - 76.9% best acc, patience=7 - 77.3% best acc)
+hyperparam tuning (grid search) on glove models: (ran twice: patience=3 - 76.9% best acc, patience = 7 - 77.3% best acc)
 glove 6B 300 dim model: 76.1% acc --> 77.32% acc 
 epochs = 50, bs = 64, lr = 0.0005, hd = 128, patience = 7
 
 
-
 sentence-transformers 384 dim model 76% acc
+
+hyperparam tuning (grid search) on sentence-transformers model: (patience = 3)
+Accuracy: 0.7766
+Params: {'lr': 0.002, 'batch_size': 64, 'hidden_dim': 256, 'epochs': 50, 'warmup_ratio': 0.1}
+
 
 To Do:
 Grid serach hyperparams
 GRU model
+Balance classes
 Increase model size
+Sentence-level pooling
+
+
 *make glove dim vecs trainable on best model* MAYBE
+
+
 image/NLP similarity project

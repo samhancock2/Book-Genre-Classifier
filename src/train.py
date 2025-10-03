@@ -9,6 +9,8 @@ from sentence_transformers import SentenceTransformer
 
 from data import BookDataset
 from models import SimpleNN
+from transformers import get_linear_schedule_with_warmup
+
 
 
 def train_and_validate(config, save_dir):
@@ -59,6 +61,14 @@ def train_and_validate(config, save_dir):
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=config['training']['lr'])
 
+     # ---- Warmup scheduler (only needed for transformers embeddings) ----
+    scheduler = None
+    if config['dataset']['embedding_type'] == 'sentence_transformers':
+        num_training_steps = len(train_loader) * config['training']['epochs']
+        num_warmup_steps = int(num_training_steps * config['training'].get('warmup_ratio', 0))
+        scheduler = get_linear_schedule_with_warmup(optimizer, num_warmup_steps, num_training_steps)
+
+
     train_loss_history, val_loss_history = [], []
 
     # ---- Early stopping ----
@@ -78,6 +88,8 @@ def train_and_validate(config, save_dir):
             loss = criterion(outputs, y)
             loss.backward()
             optimizer.step()
+            if scheduler:
+                scheduler.step()
             total_loss += loss.item()
         avg_train_loss = total_loss / len(train_loader)
         train_loss_history.append(avg_train_loss)

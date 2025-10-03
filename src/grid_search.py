@@ -17,7 +17,8 @@ param_grid = {
     "lr": [0.001, 0.0005, 0.002],
     "batch_size": [32, 64],
     "hidden_dim": [128, 256],
-    "epochs": [50]
+    "epochs": [50],
+    "warmup_ratio": [0.05, 0.1, 0.2] 
 }
 
 # ---- Build all combinations ----
@@ -47,6 +48,7 @@ for i, params in enumerate(param_combinations, start=1):
     config["training"]["batch_size"] = params["batch_size"]
     config["training"]["epochs"] = params["epochs"]
     config["model"]["hidden_dim"] = params["hidden_dim"]
+    config["training"]["warmup_ratio"] = params["warmup_ratio"]
 
     # ---- Create unique save dir ----
     embedding_type = config['dataset'].get('embedding_type', 'glove')

@@ -3,7 +3,7 @@ dataset:
   test_size: 0.1
   val_size: 0.111
   random_state: 13
-  embedding_type: "glove"  # 'glove' or 'sentence_transformers'
+  embedding_type: "sentence_transformers"  # 'glove' or 'sentence_transformers'
   transformer_model: "all-MiniLM-L6-v2"
   device: "cuda"
 
@@ -14,7 +14,8 @@ training:
   epochs: 50
   batch_size: 32
   lr: 0.001
-  early_stopping_patience: 7
+  early_stopping_patience: 3
+  warmup_ratio: 0.1
 
 model:
   type: "simple_nn"
