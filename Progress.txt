@@ -19,8 +19,14 @@ Params: {'lr': 0.002, 'batch_size': 64, 'hidden_dim': 256, 'epochs': 50, 'warmup
 
 
 GRU initial: 
-Test Accuracy: 0.7676
-Overfitting from epoch 1
+    Features:
+        Truncated to 300 words per blurb
+        Used GloVe 300 dim embeddings
+        Padding
+        Mean pooling
+        No Bidirectionality
+    Test Accuracy: 0.7676
+    Overfitting from epoch 1
 
 
 To Do:
