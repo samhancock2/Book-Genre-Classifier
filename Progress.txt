@@ -18,9 +18,14 @@ Accuracy: 0.7766
 Params: {'lr': 0.002, 'batch_size': 64, 'hidden_dim': 256, 'epochs': 50, 'warmup_ratio': 0.1}
 
 
+GRU initial: 
+Test Accuracy: 0.7676
+Overfitting from epoch 1
+
+
 To Do:
 Grid serach hyperparams
-GRU model
+GRU model - *Dropout or regularization --> look at Outlier*
 Balance classes
 Increase model size
 Sentence-level pooling
