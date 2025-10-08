@@ -40,13 +40,10 @@ GRU experiments:
 
 To Do:
 Grid serach hyperparams
-GRU model - *Dropout or regularization --> look at Outlier*
+GRU DistilBERT
 Balance classes
 Increase model size
 Sentence-level pooling
-
-
-*make glove dim vecs trainable on best model* MAYBE
 
 
 image/NLP similarity project
