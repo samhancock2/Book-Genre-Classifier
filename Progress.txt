@@ -25,9 +25,18 @@ GRU initial:
         Padding
         Mean pooling
         No Bidirectionality
+        patience = 3
     Test Accuracy: 0.7676
     Overfitting from epoch 1
 
+GRU experiments:
+    1. Dropout (0.5) + weight decay (1e-5) + Bidirectionality + hidden_dim 128 -> 64 + patience = 5:
+    Result: Much less overfitting, test accuracy ~ 0.74 - 0.76
+    
+    2. Attention pooling (instead of mean):
+    Result: test accuracy 0.7531
+    
+ 
 
 To Do:
 Grid serach hyperparams
