@@ -18,15 +18,37 @@ Accuracy: 0.7766
 Params: {'lr': 0.002, 'batch_size': 64, 'hidden_dim': 256, 'epochs': 50, 'warmup_ratio': 0.1}
 
 
+GRU initial: 
+    Features:
+        Truncated to 300 words per blurb
+        Used GloVe 300 dim embeddings
+        Padding
+        Mean pooling
+        No Bidirectionality
+        patience = 3
+    Test Accuracy: 0.7676
+    Overfitting from epoch 1
+
+GRU experiments:
+    1. Dropout (0.5) + weight decay (1e-5) + Bidirectionality + hidden_dim 128 -> 64 + patience = 5:
+    Result: Much less overfitting, test accuracy ~ 0.74 - 0.76
+    
+    2. Attention pooling (instead of mean):
+    Result: test accuracy 0.7531
+
+    3. Truncated blurbs to 600 words instead of 300:
+    Result: test accuracy 0.7630
+    Truncated blurbs to 150 words:
+    Result: test accuracy 0.7543
+    
+ 
+
 To Do:
 Grid serach hyperparams
-GRU model
+GRU DistilBERT
 Balance classes
 Increase model size
 Sentence-level pooling
-
-
-*make glove dim vecs trainable on best model* MAYBE
 
 
 image/NLP similarity project
