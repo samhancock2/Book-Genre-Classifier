@@ -35,6 +35,11 @@ GRU experiments:
     
     2. Attention pooling (instead of mean):
     Result: test accuracy 0.7531
+
+    3. Truncated blurbs to 600 words instead of 300:
+    Result: test accuracy 0.7630
+    Truncated blurbs to 150 words:
+    Result: test accuracy 0.7543
     
  
 
