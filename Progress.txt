@@ -41,14 +41,18 @@ GRU experiments:
     Truncated blurbs to 150 words:
     Result: test accuracy 0.7543
     
+
+DistilBERT:
+    Embedding dim: 768
+    Max token length: 256
+    Epochs: 3
+    LR: 2e-5
+    Weight decay: 0.01
+    Test accuracy: 0.8222
+    
  
 
 To Do:
-Grid serach hyperparams
-GRU DistilBERT
 Balance classes
-Increase model size
-Sentence-level pooling
-
 
 image/NLP similarity project

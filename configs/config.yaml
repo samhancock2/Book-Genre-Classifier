@@ -20,3 +20,6 @@ training:
 model:
   type: "simple_nn"
   hidden_dim: 128
+
+
+  # Configure either the GloVe or the sentence transformers simple nn. GRU and DistilBERT available in separate notebooks.
