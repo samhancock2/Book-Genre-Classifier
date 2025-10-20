@@ -14,15 +14,15 @@ from transformers import get_linear_schedule_with_warmup
 
 
 def train_and_validate(config, save_dir):
-    # ---- Device ----
+    # Device 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    # ---- Optional: Sentence Transformer model ----
+    # Optional: Sentence Transformer model 
     transformer_model = None
     if config['dataset']['embedding_type'] == 'sentence_transformers':
         transformer_model = SentenceTransformer(config['dataset']['transformer_model']).to(device)
 
-    # ---- Datasets ----
+    # Datasets 
     train_ds = BookDataset(
         csv_path=config['dataset']['path'],
         split="train",
@@ -50,7 +50,7 @@ def train_and_validate(config, save_dir):
     train_loader = DataLoader(train_ds, batch_size=config['training']['batch_size'], shuffle=True)
     val_loader = DataLoader(val_ds, batch_size=config['training']['batch_size'])
 
-    # ---- Model ----
+    # Model 
     input_dim = train_ds.vectors.shape[1]  # automatically adapt to GloVe or transformer
     model = SimpleNN(
         input_dim=input_dim,
@@ -61,7 +61,7 @@ def train_and_validate(config, save_dir):
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=config['training']['lr'])
 
-     # ---- Warmup scheduler (only needed for transformers embeddings) ----
+     # Warmup scheduler (only needed for transformers embeddings)
     scheduler = None
     if config['dataset']['embedding_type'] == 'sentence_transformers':
         num_training_steps = len(train_loader) * config['training']['epochs']
@@ -71,13 +71,13 @@ def train_and_validate(config, save_dir):
 
     train_loss_history, val_loss_history = [], []
 
-    # ---- Early stopping ----
+    # Early stopping 
     best_val_loss = float('inf')
     patience = config['training'].get('early_stopping_patience', 5)
     epochs_no_improve = 0
     best_model_state = None
 
-    # ---- Training loop ----
+    # Training loop 
     for epoch in range(config['training']['epochs']):
         model.train()
         total_loss = 0
@@ -94,7 +94,7 @@ def train_and_validate(config, save_dir):
         avg_train_loss = total_loss / len(train_loader)
         train_loss_history.append(avg_train_loss)
 
-        # ---- Validation ----
+        # Validation 
         model.eval()
         val_loss = 0
         with torch.no_grad():
@@ -109,7 +109,7 @@ def train_and_validate(config, save_dir):
         print(f"Epoch {epoch+1}/{config['training']['epochs']} "
               f"Train Loss: {avg_train_loss:.4f} | Val Loss: {avg_val_loss:.4f}")
 
-        # ---- Early stopping ----
+        # Early stopping 
         if avg_val_loss < best_val_loss:
             best_val_loss = avg_val_loss
             epochs_no_improve = 0
@@ -121,7 +121,7 @@ def train_and_validate(config, save_dir):
                 model.load_state_dict(best_model_state)
                 break
 
-    # ---- Save loss curves ----
+    # Save loss curves
     plt.figure(figsize=(8, 5))
     plt.plot(range(1, len(train_loss_history) + 1), train_loss_history, label="Train Loss")
     plt.plot(range(1, len(val_loss_history) + 1), val_loss_history, label="Val Loss")

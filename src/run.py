@@ -5,11 +5,11 @@ from datetime import datetime
 from train import train_and_validate
 from evaluate import evaluate
 
-# ---- Load config ----
+# Load config 
 with open("configs/config.yaml") as f:
     config = yaml.safe_load(f)
 
-# ---- Create a meaningful save directory with training params and timestamp ----
+# Create a meaningful save directory with training params and timestamp 
 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")  # e.g., 20250930_153012
 
 embedding_type = config['dataset'].get('embedding_type', 'glove')
@@ -32,14 +32,14 @@ os.makedirs(save_dir, exist_ok=True)
 
 print(f"✅ Saving results to: {save_dir}")
 
-# ---- Optional: load transformer model for sentence transformers ----
+# Optional: load transformer model for sentence transformers 
 transformer_model = None
 if embedding_type == 'sentence_transformers':
     from sentence_transformers import SentenceTransformer
     transformer_model = SentenceTransformer(config['dataset']['transformer_model']).to("cuda")
 
-# ---- Train and validate ----
+# Train and validate 
 model, label_encoder, loss_history = train_and_validate(config, save_dir)
 
-# ---- Evaluate ----
+# Evaluate 
 acc, report, cm = evaluate(model, config, label_encoder, save_dir)

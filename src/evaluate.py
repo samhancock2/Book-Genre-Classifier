@@ -11,13 +11,13 @@ from data import BookDataset
 def evaluate(model, config, label_encoder, save_dir):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    # ---- Optional: Sentence Transformer model ----
+    # Sentence Transformer model 
     transformer_model = None
     if config['dataset']['embedding_type'] == 'sentence_transformers':
         from sentence_transformers import SentenceTransformer
         transformer_model = SentenceTransformer(config['dataset']['transformer_model']).to(device)
 
-    # ---- Test dataset ----
+    # Test dataset 
     test_ds = BookDataset(
         csv_path=config['dataset']['path'],
         split="test",
@@ -41,19 +41,19 @@ def evaluate(model, config, label_encoder, save_dir):
             all_preds.extend(preds.cpu().numpy())
             all_labels.extend(y.cpu().numpy())
 
-    # ---- Metrics ----
+    #  Metrics
     acc = accuracy_score(all_labels, all_preds)
     report = classification_report(all_labels, all_preds, target_names=label_encoder.classes_)
     cm = confusion_matrix(all_labels, all_preds)
 
-    # ---- Save classification report ----
+    # Save classification report
     os.makedirs(save_dir, exist_ok=True)
     with open(os.path.join(save_dir, "classification_report.txt"), "w") as f:
         f.write(f"Accuracy: {acc:.4f}\n\n")
         f.write(report)
     print(f"✅ Saved classification report to {save_dir}/classification_report.txt")
 
-    # ---- Save confusion matrix ----
+    # Save confusion matrix 
     plt.figure(figsize=(8,6))
     sns.heatmap(cm, annot=True, fmt="d", cmap="Blues",
                 xticklabels=label_encoder.classes_,

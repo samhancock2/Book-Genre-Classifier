@@ -8,11 +8,11 @@ from datetime import datetime
 from train import train_and_validate
 from evaluate import evaluate
 
-# ---- Load base config ----
+# Load base config 
 with open("configs/config.yaml") as f:
     base_config = yaml.safe_load(f)
 
-# ---- Define hyperparameter grid ----
+# Define hyperparameter grid 
 param_grid = {
     "lr": [0.001, 0.0005, 0.002],
     "batch_size": [32, 64],
@@ -21,16 +21,16 @@ param_grid = {
     "warmup_ratio": [0.05, 0.1, 0.2] 
 }
 
-# ---- Build all combinations ----
+# Build all combinations 
 keys, values = zip(*param_grid.items())
 param_combinations = [dict(zip(keys, v)) for v in itertools.product(*values)]
 print(f"🔍 Running grid search with {len(param_combinations)} combinations")
 
-# ---- Project root ----
+# Project root 
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 results_root = os.path.join(project_root, "results")
 
-# ---- Prepare CSV summary file ----
+# Prepare CSV summary file 
 summary_file = os.path.join(results_root, f"grid_search_summary_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv")
 with open(summary_file, "w", newline="") as f:
     writer = csv.writer(f)
@@ -42,7 +42,7 @@ best_run = None
 for i, params in enumerate(param_combinations, start=1):
     print(f"\n🚀 Training model {i}/{len(param_combinations)} with params: {params}")
 
-    # ---- Clone base config ----
+    # Clone base config 
     config = yaml.safe_load(open("configs/config.yaml"))  # reload fresh
     config["training"]["lr"] = params["lr"]
     config["training"]["batch_size"] = params["batch_size"]
@@ -50,7 +50,7 @@ for i, params in enumerate(param_combinations, start=1):
     config["model"]["hidden_dim"] = params["hidden_dim"]
     config["training"]["warmup_ratio"] = params["warmup_ratio"]
 
-    # ---- Create unique save dir ----
+    # Create unique save dir 
     embedding_type = config['dataset'].get('embedding_type', 'glove')
     embedding_dim = config['embedding']['dim']
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -68,13 +68,13 @@ for i, params in enumerate(param_combinations, start=1):
 
     print(f"✅ Saving results to: {save_dir}")
 
-    # ---- Train and validate ----
+    # Train and validate 
     model, label_encoder, loss_history = train_and_validate(config, save_dir)
 
-    # ---- Evaluate ----
+    # Evaluate 
     acc, report, cm = evaluate(model, config, label_encoder, save_dir)
 
-    # ---- Save metrics ----
+    # Save metrics 
     with open(os.path.join(save_dir, "metrics.txt"), "w") as f:
         f.write(f"Accuracy: {acc:.4f}\n\n")
         f.write("Classification Report:\n")
@@ -84,7 +84,7 @@ for i, params in enumerate(param_combinations, start=1):
             f.write(f"{key}: {value}\n")
 
 
-    # ---- Append to CSV summary ----
+    # Append to CSV summary 
     with open(summary_file, "a", newline="") as f:
         writer = csv.writer(f)
         writer.writerow([
@@ -99,7 +99,7 @@ for i, params in enumerate(param_combinations, start=1):
             save_dir
         ])
 
-    # ---- Track best run ----
+    # Track best run 
     if acc > best_acc:
         best_acc = acc
         best_run = {
@@ -113,7 +113,7 @@ for i, params in enumerate(param_combinations, start=1):
 
     print(f"📊 Finished model {i}/{len(param_combinations)} | Accuracy: {acc:.4f}")
 
-# ---- Copy best run to best_model dir ----
+# Copy best run to best_model dir 
 if best_run:
     best_dir = os.path.join(results_root, "best_model")
     if os.path.exists(best_dir):
