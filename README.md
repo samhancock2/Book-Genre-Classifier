@@ -1,7 +1,7 @@
 # Text Classification with Traditional and Transformer-Based Embeddings
 
 ## Project Overview
-This project benchmarks multiple natural language processing (NLP) approaches for **text classification** on a dataset of ~34 k book blurbs.
+This project benchmarks multiple natural language processing (NLP) approaches for text classification, specifically predicting the genre of a book from its blurb, on a dataset of ~34 k book blurbs.
 The objective was to compare traditional embedding-based and sequence models against modern transformer-based architectures.
 
 Each model was trained on the same preprocessed dataset and evaluated on test accuracy.
