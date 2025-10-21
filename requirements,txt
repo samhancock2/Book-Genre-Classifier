@@ -1,0 +1,26 @@
+# PyTorch and related
+torch
+torchvision
+torchtext
+
+# HuggingFace / Transformers
+transformers
+sentence-transformers
+
+# Data handling & numerical computing
+pandas
+numpy
+
+# Machine learning utilities
+scikit-learn
+
+# Pretrained embeddings
+gensim
+
+# Visualization
+matplotlib
+seaborn
+tqdm
+
+# YAML handling
+pyyaml
